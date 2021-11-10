@@ -1,5 +1,7 @@
 import React from "react";
 import {Link} from 'react-router-dom';
+import {loginRequest} from '../actions';
+import {connect} from 'react-redux';
 import googleIcon from '../assets/images/google-icon.png';
 import '../assets/styles/Login.css';
 class Login extends React.Component{
@@ -15,6 +17,7 @@ class Login extends React.Component{
 
     handleSubmit=e=>{
         e.preventDefault();
+        this.props.ingresar(this.state.user);
         this.props.history.push('/home');
     }
     handleInput=e=>{
@@ -60,4 +63,13 @@ class Login extends React.Component{
         )
     }
 }
-export default Login;
+
+const mapStateToProps=(state)=>{
+    return ({});
+}
+const mapDispatchToProps=(dispatch)=>({
+    ingresar(user){
+        dispatch(loginRequest(user));
+    }
+})
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

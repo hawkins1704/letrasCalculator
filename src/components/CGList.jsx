@@ -1,65 +1,81 @@
 import React from "react";
+import {addCGInicial,addCGFinal} from '../actions';
+import {connect} from 'react-redux';
+import '../assets/styles/components/CGList.css';
 
 class CGList extends React.Component{
     constructor(props)
     {
         super(props);
         this.state={
-            CGIniciales:[{
-                motivo:'G.Administrativos',
-                valorNominal:2000,
-            }],
             motivo:'',
-            valorNominal:'',
+            valorNominal:''
         }
     }
-    handleAdd=e=>{
-        e.preventDefault();
-        this.setState({
-            ...this.state,
-            CGIniciales:[...this.state.CGIniciales,
-                {
-                    motivo:this.state.motivo,
-                    valorNominal:this.state.valorNominal
-                }],
-            })
-    }
 
-    handleChange=e=>{
+
+    handleInput=e=>{
         this.setState({
             ...this.state,
             [e.target.name]:e.target.value
         })
     }
-    
+    handleSubmit=e=>{
+        e.preventDefault();
+        switch(this.props.type){
+            case 'Iniciales':this.props.addCGInicial(this.state);break
+            case 'Finales':this.props.addCGFinal(this.state);break
+            default:return;
+        }
+    }
     render(){
         return(
-            <form action="">
+            <form >
 
                 <div className="form__section--label">
                     <label htmlFor="motivo">Motivo: </label>
-                    <input type="text" name="motivo" id="motivo" onChange={this.handleChange}/>
+                    <input type="text" name="motivo" id="motivo" onChange={this.handleInput}/>
                 </div>
                 <div className="form__section--label">
                     <label htmlFor="valorNominal">Valor Nominal: </label>
-                    <input type="text" name="valorNominal" id="valorNominal" onChange={this.handleChange}/>
+                    <input type="text" name="valorNominal" id="valorNominal" onChange={this.handleInput}/>
                 </div>
-                <button onClick={this.handleAdd}>
-                    Agregar
-                </button>
-                <select name="listaCGIniciales" style={{width:"368px"}} size="5" id="listaCGIniciales" >
-                    {
-                        this.state.CGIniciales.map((item)=>{
-                            return(
-                                <option value={item.valorNominal} name={item.motivo}>{item.motivo} - {item.valorNominal}</option>
-                            )
-                        })
-                    }
-                </select>
+                <div className="listContainer">
+                    <button className="listContainer__button" onClick={this.handleSubmit}>
+                        +
+                    </button>
+                    <div className="listContainer__list" >
+                        {
+                            this.props.type==='Iniciales'?
+                            this.props.CGIniciales.map((item)=>{
+                                return(
+                                    <div >{item.motivo} - {item.valorNominal}</div>
+                                    )
+                                }):
+                                this.props.CGFinales.map((item)=>{
+                                    return(
+                                        <div >{item.motivo} - {item.valorNominal}</div>
+                                        )
+                                    })
+                                }
+                    </div>
+                </div>
             </form>
         )
     }
     
 
 }
-export default CGList;
+const mapStateToProps=(state)=>({
+    CGIniciales:state.letraActual.cGIniciales,
+    CGFinales:state.letraActual.cGFinales,
+})
+const mapDispatchToProps=(dispatch)=>({
+    addCGInicial(CGInicial){
+        dispatch(addCGInicial(CGInicial));
+    },
+    addCGFinal(CGFinal){
+        dispatch(addCGFinal(CGFinal));
+    }
+})
+export default connect(mapStateToProps, mapDispatchToProps)(CGList);

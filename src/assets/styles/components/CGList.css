@@ -1,0 +1,33 @@
+.listContainer{
+    display: flex;
+}
+.listContainer__button{
+    width: 62px;
+    border: none;
+    color: #FFFFFF;
+    background-color: #FD474C;
+    border-radius: 10px 10px 10px 30px;
+    font-size: 40px;
+    font-weight: 100;
+}
+.listContainer__list{
+    width: 100%;
+    min-height: 100px;
+    max-height: 100px;
+    background-color: #FFFFFF;
+    overflow: scroll;
+    overflow-x:hidden;
+}
+.listContainer__list::-webkit-scrollbar {
+    width: 4px;
+    overflow: visible;
+}
+.listContainer__list::-webkit-scrollbar-track {
+   background: black;
+   border-radius: 2px;
+}
+.listContainer__list::-webkit-scrollbar-thumb {
+    background: #FD474C;
+    border-radius: 2px;
+    width: 20px;
+ }

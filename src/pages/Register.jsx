@@ -32,21 +32,21 @@ class Register extends React.Component{
                 <section className="register__container">
                     <h1>Regístrate</h1>
                     <form className="register__container--form" onSubmit={this.handleSubmit}>
-                        <input 
+                        <input
                         className="input"
-                        type="text" 
+                        type="text"
                         placeholder="Nombre"
                         name="nombre"
                         onChange={this.handleInput}/>
                         <input
                         className="input"
-                        type="email" 
+                        type="email"
                         placeholder="Correo Electrónico"
                         name="correo"
                         onChange={this.handleInput}/>
-                        <input 
+                        <input
                         className="input"
-                        type="password" 
+                        type="password"
                         placeholder="contraseña"
                         name="contraseña"
                         onChange={this.handleInput}/>
@@ -64,6 +64,6 @@ class Register extends React.Component{
             </section>
         )
     }
-        
+
 }
 export default Register;

@@ -1,0 +1,29 @@
+.home{
+    display: flex;
+}
+.home__container--form{
+    display: flex;
+    flex-wrap: wrap;
+}
+.form__section{
+    background-color: #E5E5E5;
+    border-radius: 30px;
+    margin: 0px 0px 18px 30px;
+    padding:24px;
+    width: 40%;
+}
+.form__section h2{
+    margin-top:0;
+}
+.tipoMoneda{
+    width:  83% !important;
+}
+
+.home__container{
+    width:60vw;
+}
+
+.home__resultados{
+    width:40vw;
+    background-color: #E5E5E5;
+}
