@@ -4,6 +4,7 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Home from '../pages/Home';
 import {BrowserRouter,Route,Switch} from 'react-router-dom';
+import LetrasList from '../pages/LetrasList';
 
 class App extends React.Component{
   render(){
@@ -15,6 +16,7 @@ class App extends React.Component{
           <Route exact path="/login" component={Login}></Route>
           <Route exact path="/register" component={Register}></Route>
           <Route exact path="/home" component={Home}></Route>
+          <Route exact path="/misletras" component={LetrasList}></Route>
         </Switch>
         </Layout>
       </BrowserRouter>

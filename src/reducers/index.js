@@ -4,6 +4,15 @@ const reducer=(state,action)=>{
         {
             return {
                 ...state,
+                hasUser:true,
+                user:action.payload,
+            }
+        }
+        case 'HANDLE_LOGOUT':
+        {
+            return {
+                ...state,
+                hasUser:false,
                 user:action.payload,
             }
         }
@@ -71,7 +80,35 @@ const reducer=(state,action)=>{
                     ...state.resultadoActual,
                     tasaEfectivaP:action.payload.tasaEfectivaP,
                     tasaDescontadaP:action.payload.tasaDescontadaP,
+                    descuento:action.payload.descuento||0,
+                    cITotales:action.payload.cITotales,
+                    cFTotales:action.payload.cFTotales,
+                    valorNeto:action.payload.valorNeto,
+                    valorTotalRecibir:action.payload.valorTotalRecibir,
+                    valorTotalEntregar:action.payload.valorTotalEntregar,
+                    tasaCostoEfectivo:action.payload.tasaCostoEfectivo,
                 }
+            }
+        }
+        case 'AGREGAR_LETRA':
+        {
+            return{
+                ...state,
+                misLetras:[
+                    ...state.misLetras,
+                    {
+                        ...action.payload,
+                        id:state.misLetras.length===0?state.misLetras.length+1:
+                            state.misLetras[state.misLetras.length-1].id+1,
+                    },
+                ]
+            }
+        }
+        case 'ELIMINAR_LETRA':
+        {
+            return{
+                ...state,
+                misLetras:state.misLetras.filter(letra=>letra.id!=action.payload),
             }
         }
         default:

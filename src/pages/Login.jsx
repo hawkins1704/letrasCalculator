@@ -38,8 +38,8 @@ class Login extends React.Component{
                     <form className="login__container--form" onSubmit={this.handleSubmit}>
                         <input 
                         className="input"
-                        type="email" 
-                        placeholder="Correo Electrónico"
+                        type="text" 
+                        placeholder="Usuario o Correo"
                         name="correo"
                         onChange={this.handleInput}/>
                         <input 

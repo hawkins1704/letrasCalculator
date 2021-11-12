@@ -7,6 +7,7 @@ import {createStore} from 'redux';
 import reducer from './reducers';
 
 const initialState={
+  "hasUser":false,
   "user":{},
   "letraActual":{
       moneda:"",
@@ -24,15 +25,15 @@ const initialState={
       moneda:"",//
       tasaEfectiva:"",//
       diasTranscurridos:"",//
-      tasaEfectivaP:"",
-      tasaDescontadaP:"",
-      descuento:"",
+      tasaEfectivaP:"",///
+      tasaDescontadaP:"",///
+      descuento:"",///
       retencion:"",//
-      cITotales:"",
-      valorNeto:"",
-      valorTotalRecibir:"",
-      cFTotales:"",
-      valorTotalEntregar:"",
+      cITotales:"",///
+      valorNeto:"",///
+      valorTotalRecibir:"",///
+      cFTotales:"",///
+      valorTotalEntregar:"",///
       tasaCostoEfectivo:"",
   },
   "misLetras":[],

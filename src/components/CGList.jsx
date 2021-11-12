@@ -47,14 +47,14 @@ class CGList extends React.Component{
                     <div className="listContainer__list" >
                         {
                             this.props.type==='Iniciales'?
-                            this.props.CGIniciales.map((item)=>{
+                            this.props.CGIniciales.map((item, index)=>{
                                 return(
-                                    <div >{item.motivo} - {item.valorNominal}</div>
+                                    <div key={index} >{item.motivo} - {item.valorNominal}</div>
                                     )
                                 }):
-                                this.props.CGFinales.map((item)=>{
+                                this.props.CGFinales.map((item,index)=>{
                                     return(
-                                        <div >{item.motivo} - {item.valorNominal}</div>
+                                        <div key={index}>{item.motivo} - {item.valorNominal}</div>
                                         )
                                     })
                                 }
