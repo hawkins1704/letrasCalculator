@@ -1,7 +1,36 @@
-.container{
+.resultados__container{
+    border-radius: 30px;
+    background-color: #E5E5E5;
     width: 100%;
+}
+.container__title{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left:24px ;
+    height: 70px;
+    border-radius: 30px 30px 0 0;
+    color:#FD474C;
+    background-color:#323232;
+}
+.container__title h2{
+
+    margin:0px;
+}
+.container__content{
     padding:24px;
 }
-.container h2{
-    margin-top:0px;
+.container__item{
+    display: flex;
+    justify-content: space-between;
+}
+.container__button{
+    margin-top: 30px;
+    display: flex;
+    justify-content:end;
+}
+.container__button button{
+    border-radius: 10px 10px 30px 10px  ;
+    width: 62px;
+    height: 66px;
 }

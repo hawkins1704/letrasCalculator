@@ -24,7 +24,7 @@ const initialState={
   "resultadoActual":{
       moneda:"",//
       tasaEfectiva:"",//
-      diasTranscurridos:"",//
+      diasTranscurridos:0,//
       tasaEfectivaP:"",///
       tasaDescontadaP:"",///
       descuento:"",///

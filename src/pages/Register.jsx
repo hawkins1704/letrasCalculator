@@ -30,7 +30,7 @@ class Register extends React.Component{
         return (
             <section className="register">
                 <section className="register__container">
-                    <h1>Regístrate</h1>
+                    <h2><span className="bold">Regístrate</span> </h2>
                     <form className="register__container--form" onSubmit={this.handleSubmit}>
                         <input
                         className="input"

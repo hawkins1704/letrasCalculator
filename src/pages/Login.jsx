@@ -34,7 +34,7 @@ class Login extends React.Component{
             
             <section className="login">
                 <section className="login__container">
-                    <h1>Inicia Sesión</h1>
+                    <h2><span className="bold">Inicia</span> Sesión</h2>
                     <form className="login__container--form" onSubmit={this.handleSubmit}>
                         <input 
                         className="input"

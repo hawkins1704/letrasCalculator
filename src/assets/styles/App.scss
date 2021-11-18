@@ -10,6 +10,10 @@ body {
 * {
   box-sizing: border-box;
 }
+h2{
+  margin:0 0 24px 0;
+  font-weight: lighter;
+}
 .button {
   background-color: #FD474C;
   border: none;
@@ -24,5 +28,5 @@ body {
   margin: 10px 0;
 }
 .bold{
-  font-weight: bold;
+  font-weight: 600;
 }

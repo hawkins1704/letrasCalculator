@@ -3,6 +3,7 @@
 }
 .listContainer__button{
     width: 62px;
+    margin-right: 10px;
     border: none;
     color: #FFFFFF;
     background-color: #FD474C;

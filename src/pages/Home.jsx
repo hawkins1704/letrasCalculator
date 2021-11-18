@@ -3,7 +3,7 @@ import CGList from "../components/CGList";
 import Resultado from "../components/Resultado";
 import '../assets/styles/Home.css';
 import{Link} from 'react-router-dom';
-import {convertirTasaEfectiva,calcularTasaDescontada} from '../helpers';
+import {convertirTasaEfectiva,calcularTasaDescontada,convertirNominalAEfectiva} from '../helpers';
 
 import {enviarLetra,enviarResultadosPrevios,enviarResultadosRestantes} from '../actions';
 import{connect}from 'react-redux';
@@ -22,7 +22,9 @@ class Home extends React.Component{
             retencion:"",
             diasPorAnio:"360",
             plazoTasa:"diario",
-            tasaEfectiva:"",
+            tipoTasa:"efectiva",
+            tasa:"",
+            capitalizacion:"1",
             fechaDescuento:"",
         }
     }
@@ -48,10 +50,17 @@ class Home extends React.Component{
         var fechaVencimiento=new Date(this.state.fechaVencimiento).getTime();
         var fechaDescuento=new Date(this.state.fechaDescuento).getTime();
         var diasTranscurridos=(fechaVencimiento-fechaDescuento)/(1000*60*60*24);
-       
+        var tasa=0;
+       if(this.state.tipoTasa==='nominal'){
+        tasa=convertirNominalAEfectiva(this.state.plazoTasa,parseInt(this.state.tasa),parseInt(this.state.capitalizacion));
+        tasa=tasa*100;
+        }else{
+        tasa=parseInt(this.state.tasa);
+       }
+       console.log("TASA EFECTIVA",tasa);
         return{
             moneda:this.props.letra.moneda,
-            tasaEfectiva:this.state.tasaEfectiva,
+            tasaEfectiva:tasa,
             diasTranscurridos,
             retencion:this.state.retencion,
         }
@@ -110,16 +119,23 @@ class Home extends React.Component{
                 <div className="home__container">
                     <form onSubmit={this.handleSubmit} className="home__container--form">
                         <div className="form__section tipoMoneda">
-                            <h2>Tipo de Moneda</h2>
-                            <label htmlFor="soles">Soles</label>
-                            <input type="radio" name="moneda" id="soles" value="soles" onChange={this.handleInput}/>
-
-                            <label htmlFor="dolares">Dolares</label>
-                            <input type="radio" name="moneda" id="dolares" value="dolares" onChange={this.handleInput}/>
+                            <div className="tipoMoneda__item">
+                                <h2><span className="bold">Tipo</span> de Moneda</h2>
+                            </div>
+                            <div className="tipoMoneda__item">
+                                <label htmlFor="soles">Nuevo Sol Peruano
+                                    <input type="radio" name="moneda" id="soles" value="soles" onChange=    {this.handleInput}/>
+                                </label>
+                            </div>
+                            <div className="tipoMoneda__item">
+                                <label htmlFor="dolares">Dólar Americano
+                                    <input type="radio" name="moneda" id="dolares" value="dolares" onChange=    {this.handleInput}/>
+                                </label>
+                            </div>
                         </div>
 
                         <div className="form__section">
-                            <h2>Datos de la letra</h2>
+                            <h2><span className="bold">Datos</span> de la letra</h2>
                             <div className="form__section--label">
                                 <label htmlFor="fechaEmision">Fecha de emision: </label>
                                 <input type="date" name="fechaEmision" id="fechaEmision" onChange={this.handleInput}/>
@@ -141,7 +157,7 @@ class Home extends React.Component{
                         </div>
 
                         <div className="form__section">
-                            <h2>Datos de la tasa y plazo</h2>
+                            <h2><span className="bold">Datos</span> de la tasa y plazo</h2>
 
                             <div className="form__section--label">
                                 <label htmlFor="valorNominal">Plazo de tasa: </label>
@@ -156,11 +172,42 @@ class Home extends React.Component{
                                     <option value="anual">Anual</option>
                                 </select>
                             </div>
+                            <div className="form__section--label">
+                                <label htmlFor="tasa">Tipo de Tasa:</label>
+                                <div className="tipoTasa__item">
+                                    <label htmlFor="soles">Efectiva
+                                        <input type="radio" name="tipoTasa" id="efectiva" value="efectiva" onChange=    {this.handleInput}/>
+                                    </label>
+                                </div>
+                                <div className="tipoTasa__item">
+                                    <label htmlFor="tasa">Nominal
+                                        <input type="radio" name="tipoTasa" id="nominal" value="nominal" onChange=    {this.handleInput}/>
+                                    </label>
+                                </div>
+
+                            </div>
 
                             <div className="form__section--label">
-                                <label htmlFor="tasaEfectiva">Tasa Efectiva(%): </label>
-                                <input type="text" name="tasaEfectiva" onChange={this.handleInput} />
+                                <label htmlFor="tasaEfectiva">Tasa(%): </label>
+                                <input type="text" name="tasa" onChange={this.handleInput} />
                             </div>
+                            {
+                                this.state.tipoTasa==='nominal'?
+                                (<div className="form__section--label">
+                                <label htmlFor="valorNominal">Capitalización: </label>
+                                    <select name="capitalizacion" id="" onChange={this.handleInput}>
+                                        <option value="1">Diaria</option>
+                                        <option value="15">Quincenal</option>
+                                        <option value="30">Mensual</option>
+                                        <option value="60">Bimestral</option>
+                                        <option value="90">Trimestral</option>
+                                        <option value="120">Cuatrimestral</option>
+                                        <option value="180">Semestral</option>
+                                        <option value="360">Anual</option>
+                                </select>
+                                </div>):""
+                            }
+                            
 
                             <div className="form__section--label">
                                 <label htmlFor="fechaDescuento">Fecha de descuento: </label>
@@ -168,19 +215,19 @@ class Home extends React.Component{
                             </div>
                         </div>
                         <div className="form__section">
-                            <h2>Costos/Gastos Iniciales</h2>
+                            <h2><span className="bold">Costos/Gastos</span> Iniciales</h2>
                             <CGList type="Iniciales" />
 
                         </div>
 
                         <div className="form__section">
-                            <h2>Costos/Gastos Finales</h2>
+                            <h2><span className="bold">Costos/Gastos</span> Finales</h2>
                             <CGList type="Finales" />
 
                         </div>
                         <div className="form__section">
-                            <button type="submit">Calcular</button>
-                            <button type="reset">Limpiar</button>
+                            <button type="submit" className="button button--calcular">Calcular</button>
+                            <button type="reset" className="button button--limpiar">Limpiar</button>
                         </div>
                     </form>
                 </div>

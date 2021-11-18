@@ -65,7 +65,7 @@ const reducer=(state,action)=>{
                 ...state,
                 resultadoActual:{
                     ...state.resultadoActual,
-                    tasaEfectiva:(parseInt(action.payload.tasaEfectiva)/100)||0,
+                    tasaEfectiva:(action.payload.tasaEfectiva/100)||0,
                     diasTranscurridos:action.payload.diasTranscurridos||0,
                     retencion:parseInt(action.payload.retencion)||0,
                     moneda:action.payload.moneda||'soles',
