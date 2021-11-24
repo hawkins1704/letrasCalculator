@@ -104,6 +104,16 @@ const reducer=(state,action)=>{
                 ]
             }
         }
+        case 'AGREGAR_A_CARTERA':
+        {
+            return{
+                ...state,
+                cartera:{
+                    sumatoriaTotalRecibir:action.payload.sumatoriaTotalRecibir,
+                    tasaCostoEfectivo:action.payload.tasaCostoEfectivo
+                }
+            }
+        }
         case 'ELIMINAR_LETRA':
         {
             return{

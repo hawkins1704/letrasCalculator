@@ -37,6 +37,10 @@ const initialState={
       tasaCostoEfectivo:"",
   },
   "misLetras":[],
+  "cartera":{
+    sumatoriaTotalRecibir:0,
+    tasaCostoEfectivo:0,
+  }
 
 }
 const composeEnhancers =

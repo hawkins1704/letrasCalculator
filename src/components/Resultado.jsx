@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {agregarLetra} from '../actions';
+import {agregarLetra,agregarACartera} from '../actions';
+import {calcularTasaDescontada, calcularTCEA} from '../helpers';
 import '../assets/styles/components/Resultados.css';
 
 
@@ -17,10 +18,21 @@ class Resultado extends React.Component{
             id:this.state.id+1,
         })
     }
-    handleSubmit=(e)=>{
+    handleSubmit=async(e)=>{
         e.preventDefault();
-        this.props.handleSubmit(this.props.resultados,this.state.id);
+        await this.props.handleSubmit(this.props.resultados,this.state.id);
+        var cartera=this.actualizarCartera();
+        await this.props.agregarACartera(cartera);
+
        
+    }
+    actualizarCartera=()=>{
+        var sumatoriaTotalRecibir=this.props.cartera.sumatoriaTotalRecibir+this.props.resultados.valorTotalRecibir;
+        var tasaCostoEfectivo=calcularTCEA(this.props.misLetras,sumatoriaTotalRecibir);
+        return({
+            sumatoriaTotalRecibir:sumatoriaTotalRecibir,
+            tasaCostoEfectivo:tasaCostoEfectivo,
+        })
     }
     render(){
         return(
@@ -176,11 +188,16 @@ class Resultado extends React.Component{
 const mapStateToProps=(state)=>({
     letra:state.letraActual,
     resultados:state.resultadoActual,
+    cartera:state.cartera,
+    misLetras:state.misLetras,
 })
 
 const mapDispatchToProps=(dispatch)=>({
     handleSubmit(letra, id){
         dispatch(agregarLetra(letra, id));
+    },
+    agregarACartera(datos){
+        dispatch(agregarACartera(datos));
     }
 })
 export default connect(mapStateToProps,mapDispatchToProps)(Resultado);

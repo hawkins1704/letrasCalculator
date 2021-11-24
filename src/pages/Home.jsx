@@ -43,8 +43,10 @@ class Home extends React.Component{
         this.props.enviarResultadosPrevios(datos);
         const datosR=this.calcularDatosRestantes();
         this.props.enviarResultadosRestantes(datosR);
-
+        
     }
+
+
 
     calcularDatosPrevios=()=>{
         var fechaVencimiento=new Date(this.state.fechaVencimiento).getTime();
@@ -52,12 +54,11 @@ class Home extends React.Component{
         var diasTranscurridos=(fechaVencimiento-fechaDescuento)/(1000*60*60*24);
         var tasa=0;
        if(this.state.tipoTasa==='nominal'){
-        tasa=convertirNominalAEfectiva(this.state.plazoTasa,parseInt(this.state.tasa),parseInt(this.state.capitalizacion));
+        tasa=convertirNominalAEfectiva(this.state.plazoTasa,parseFloat(this.state.tasa),parseFloat(this.state.capitalizacion));
         tasa=tasa*100;
         }else{
-        tasa=parseInt(this.state.tasa);
+        tasa=parseFloat(this.state.tasa);
        }
-       console.log("TASA EFECTIVA",tasa);
         return{
             moneda:this.props.letra.moneda,
             tasaEfectiva:tasa,
@@ -74,11 +75,11 @@ class Home extends React.Component{
         var descuento=tasaDescontadaP*this.props.letra.valorNominal;
         var cITotales=0;
         this.props.letra.cGIniciales.forEach( e => {
-            cITotales+=parseInt(e.valorNominal);
+            cITotales+=parseFloat(e.valorNominal);
         });
         var cFTotales=0;
         this.props.letra.cGFinales.forEach( e => {
-            cFTotales+=parseInt(e.valorNominal);
+            cFTotales+=parseFloat(e.valorNominal);
         });
         var valorNeto=this.props.letra.valorNominal-descuento;
         var valorTotalRecibir=valorNeto
@@ -88,8 +89,7 @@ class Home extends React.Component{
         var valorTotalEntregar=this.props.letra.valorNominal
                                 +cFTotales
                                 -this.props.resultados.retencion;
-
-        var tasaCostoEfectivo=Math.pow((valorTotalEntregar/valorTotalRecibir),(360/this.props.resultados.diasTranscurridos))-1;
+        var tasaCostoEfectivo=Math.pow((valorTotalEntregar.toFixed(2)/valorTotalRecibir.toFixed(2)).toFixed(8),(360/this.props.resultados.diasTranscurridos).toFixed(2))-1;
         return{
             tasaEfectivaP:tasaEfectivaP,
             tasaDescontadaP:tasaDescontadaP,
@@ -243,6 +243,7 @@ const mapStateToProps=(state)=>({
     hasUser:state.hasUser,
     resultados:state.resultadoActual,
     letra:state.letraActual,
+    cartera:state.cartera,
 })
 const mapDispatchToProps=(dispatch)=>({
     enviarLetra(letra){

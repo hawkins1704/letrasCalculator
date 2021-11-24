@@ -1,5 +1,7 @@
+import algebra, { Equation } from 'algebra.js';
+import nerdamer from 'nerdamer/all.min';
 export const convertirTasaEfectiva=(tasaI,plazoTasa,diasTasaP)=>{
-    
+  
     var diasTasaE=0;
     switch(plazoTasa){
         case 'diario':diasTasaE=1;break;
@@ -34,4 +36,28 @@ export const convertirNominalAEfectiva=(plazoTasa,tasa,capitalizacion)=>{
     }
     console.log(((tasa/100)/(diasTasaN/capitalizacion)));
     return (Math.pow(1+((tasa/100)/(diasTasaN/capitalizacion)),(diasTasaN/capitalizacion))-1);
+}
+
+export const calcularTCEA=(letras,sumatoriaTotalRecibir)=>{
+     if(letras.length===1){
+         console.log(letras[0].tasaCostoEfectivo);
+         return letras[0].tasaCostoEfectivo
+     }
+     console.log(letras);
+     console.log("Sumatoria total a Recibir:",sumatoriaTotalRecibir);
+     var eq=nerdamer(`sum=${sumatoriaTotalRecibir}`);
+     var sum='';
+     var ter='';
+     for(var i=0;i<letras.length;i++)
+     {   
+         ter=`(${letras[i].valorTotalEntregar})/((1+x)^${letras[i].diasTranscurridos/360})`;
+         sum+=`+${ter}`;
+        // console.log(sum);
+     }
+     eq=eq.evaluate({sum:sum})
+     var sol=eq.solveFor('x');
+    // var eq= nerdamer.solveEquations('x^(-2)+2=11');
+    var tcea=sol[1].symbol.multiplier.num/sol[1].symbol.multiplier.den;
+    return tcea;
+
 }

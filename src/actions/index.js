@@ -4,6 +4,12 @@ export const loginRequest=(payload)=>{
         payload:payload
     }
 }
+export const agregarACartera=(payload)=>{
+    return {
+        type:'AGREGAR_A_CARTERA',
+        payload:payload
+    }
+}
 export const addCGInicial=(payload)=>{
     return {
         type:'ADD_CGINICIAL',

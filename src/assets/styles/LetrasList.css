@@ -9,7 +9,17 @@
     padding:24px;
     width: 45vw;
 }
-
+.cartera{
+    color:#FD474C;
+    background-color:#323232;
+    width: 60vw;
+    display: block;
+    margin: 0 auto 24px auto !important;
+}
+.cartera .item__text{
+    display: flex;
+    justify-content: space-between;
+}
 .item__text{
     display: flex;
     justify-content: space-between;
